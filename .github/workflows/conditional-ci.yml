@@ -24,7 +24,7 @@ jobs:
     
     # Requirement 4: Add Correct Conditional Logic 
     # Ensures the job only runs on feature branches
-    if: startsWith(github.ref, 'refs/heads/feature/')
+    if: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
     
     steps:
       - name: Checkout code

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout -b feature/test-branch
+        uses: actions/checkout@v6
       - name: Build application
         run: echo "Building..."
 

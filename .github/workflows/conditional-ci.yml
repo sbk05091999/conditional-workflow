@@ -1,7 +1,3 @@
-sudo vim .github/workflows/conditional-ci.yml
-
-Add the required YAML workflow:
-
 name: Conditional CI Pipeline
 
 on:
@@ -10,25 +6,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Run build
-        run: echo "Building project..."
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build step
+        run: echo "Build completed successfully"
 
   test:
-    runs-on: ubuntu-latest
     needs: build
     if: startsWith(github.ref, 'refs/heads/feature/') && success()
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Run tests
-        run: echo "Running tests on feature branch..."
-Stage the file:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-git add .github/workflows/conditional-ci.yml
-
-Set Git identity if needed:
-
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
-Commit the workflow:
-
-git commit -m "Add conditional CI workflow"
+      - name: Test step
+        run: echo "Tests executed successfully"

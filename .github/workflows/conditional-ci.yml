@@ -1,33 +1,34 @@
-name: CI Workflow
+sudo vim .github/workflows/conditional-ci.yml
+
+Add the required YAML workflow:
+
+name: Conditional CI Pipeline
 
 on:
   push:
-    branches:
-      - '**' 
 
 jobs:
-  # 1. The Build Job--
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-      - name: Build application
-        run: echo "test"
+      - name: Run build
+        run: echo "Building project..."
 
-  # 2. The Test Job
   test:
     runs-on: ubuntu-latest
-    
-    # Requirement 5: Add Job Dependency Between Build -> Test .
-    needs: build 
-    
-    # Requirement 4: Add Correct Conditional Logic 
-    # Ensures the job only runs on feature branches
-    if: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
-    
+    needs: build
+    if: startsWith(github.ref, 'refs/heads/feature/') && success()
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
       - name: Run tests
-        run: echo "Running tests because this is a feature branch!"
+        run: echo "Running tests on feature branch..."
+Stage the file:
+
+git add .github/workflows/conditional-ci.yml
+
+Set Git identity if needed:
+
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+Commit the workflow:
+
+git commit -m "Add conditional CI workflow"
